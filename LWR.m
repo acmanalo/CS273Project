@@ -8,7 +8,7 @@ X = iris(:, 1:end-1);
 Y = iris(:, end);
 
 %% Split data
-[xtr, xte, ytr, yte] = splitData(kaggleX, kaggleY, .05);
+[xtr, xte, ytr, yte] = splitData(kaggleX, kaggleY, .001);
 [Xtr, Xte, Ytr, Yte] = splitData(X, Y, .75);
 
 %% Run on IRIS
@@ -47,7 +47,7 @@ end
 clearvars -except kaggleX kaggleY xtr xte ytr yte kaggleTestData iris X Y
 rand('state',0)
 
-[xtr2, xte2, ytr2, yte2] = splitData(xtr(:, 3:end), ytr, .66);
+[xtr2, xte2, ytr2, yte2] = splitData(xtr(:, 2:end), ytr, .66);
 
 [xtr2, mu, sigma] = zscore(xtr2);
 xte2 = normalize(xte2, mu, sigma);

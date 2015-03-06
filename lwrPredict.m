@@ -4,7 +4,8 @@ function prediction = lwrPredict(training_inputs, training_outputs, datapoint, c
     x = training_inputs;
     y = training_outputs;
     
-    xt = x' * (weights * x);
+    ep = .5;
+    xt = x' * (weights * x) + ep * eye(size(x, 2));
     theta = xt^-1 * (x' * (weights * y));
     
     prediction = datapoint * theta;

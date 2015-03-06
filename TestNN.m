@@ -7,7 +7,7 @@ kaggleTestData = load('data/kaggle.X1.test.txt');
 
 %% 
 clearvars -except kaggleX kaggleY xtr xte ytr yte kaggleTestData
-rand('state',0)
+rand('state',0);
 
 % Normalize the data
 % [xtr, mu, sigma] = zscore(xtr);
@@ -17,7 +17,7 @@ nn = nnsetup([91 40 1]); % 3 layers, 91 input, variable hidden, 1 output
 nn.activation_function = 'sigm';
 nn.learningRate =.05;
 nn.output = 'linear';
-opts.numepochs =  50;   %  Number of full sweeps through data
+opts.numepochs =  20;   %  Number of full sweeps through data
 opts.batchsize = 1000;  %  Take a mean gradient step over this many samples
 [nn, L] = nntrain(nn, xtr, ytr, opts);
 
@@ -26,7 +26,16 @@ opts.batchsize = 1000;  %  Take a mean gradient step over this many samples
 ypredicted = nnpredict(nn, kaggleTestData);
 
 pred = nnpredict(nn, xte);
-unique(pred)
+unique(pred);
+maxKaggle = max(ytr);
+minKaggle = min(ytr);
+maxPred = max(ypredicted) - min(ypredicted);
+minPred = min(ypredicted);
+
+for i = 1:length(ypredicted)
+    ypredicted(i) = (ypredicted(i) - minPred) * maxKaggle / maxPred;
+end
+
 [er, bad] = nntest(nn, xte, yte);
 
 fh = fopen('predictions.csv','w');  % open file for upload

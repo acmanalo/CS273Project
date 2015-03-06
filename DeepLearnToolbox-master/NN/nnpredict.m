@@ -4,5 +4,6 @@ function labels = nnpredict(nn, x)
     nn.testing = 0;
     
     [dummy, i] = max(nn.a{end},[],2);
-    labels = i;
+    unfiltered = nn.a{end};
+    labels = unfiltered;
 end
