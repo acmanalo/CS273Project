@@ -8,7 +8,7 @@ X = iris(:, 1:end-1);
 Y = iris(:, end);
 
 %% Split data
-[xtr, xte, ytr, yte] = splitData(kaggleX, kaggleY, .001);
+[xtr, xte, ytr, yte] = splitData(kaggleX, kaggleY, .05);
 [Xtr, Xte, Ytr, Yte] = splitData(X, Y, .75);
 
 %% Run on IRIS
